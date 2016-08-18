@@ -1,0 +1,73 @@
+---
+title: "Using `R` Notebooks"
+author: "Carl Frederick"
+date: "August 17, 2016"
+output: 
+  revealjs::revealjs_presentation:
+    theme: simple
+    transition: slide
+    center: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+
+
+```
+
+## Why Notebooks?
+
+```{r}
+library(DiagrammeR)
+
+DiagrammeR("
+  graph LR;
+    A(<h1>Reproducible Research</h1>)-->C(<h1>R Notebooks</h1>);
+    B(<h1>Simplified Interaction</h1>)-->C;
+", width=1000, height=400)
+
+```
+
+## Other Notebook platforms?
+
+- Jupyter <http://jupyter.org/>
+- IPython (old, superseded by Jupyter)
+    
+    
+## Notebook alternatives:
+
+- R markdown documents
+- knitr / Sweave
+- Word + cut/paste :(
+
+---
+
+<h1>DEMO</h1>
+
+## Key Capabilities
+
+>- Shareable (download .Rmd file via browser)
+>- Code folding in the browser
+>- Runs in the current environment
+>- No need to re-render the entire document when code changes
+>- Can incorporate multiple languages (Python, Perl, C)
+>- Seemlessly convert to regular .Rmd file with typical outputs
+
+## Cons
+
+>- Remember to run the chunks before you preview ... or else they won't 
+update in the .nb.html file.
+>- Just different enough from `R` markdown that little things can trip you up.
+
+## Thanks
+
+- carl.frederick@dpi.wi.gov
+- RStudio preview version: <https://www.rstudio.com/products/rstudio/download/preview/>
+- R Notebooks webinar: <https://www.rstudio.com/resources/webinars/introducing-notebooks-with-r-markdown/>
+
+## Version info: 
+```{r thanks, eval=TRUE}
+cat(paste("RStudio Version: 0.99.1258\n\n"))
+sessionInfo()
+```
+

@@ -1,0 +1,76 @@
+---
+title: "Carl's Demo R Notebook"
+output: html_notebook
+---
+
+I use the following chunk of code to load the data and libraries.  Note the 
+green progress bar.
+
+```{r setup}
+library(ttbbeer)
+library(lubridate)
+library(dplyr)
+library(tidyr)
+
+beermaterials$mon <- rep(1:12,10)
+beermaterials$time <- as.Date(paste(beermaterials$Year, beermaterials$mon, "01", sep="-"))
+
+hop_prices <- data.frame(
+  time = as.Date(paste(2005:2015, "12", "31", sep="-")),
+  price = c(1.94, 2.05, 2.99, 4.03, 3.57, 3.28, 3.14, 3.17, 3.35, 3.67, 4.38)
+)
+```
+
+```{r checking the data}
+summary(beermaterials)
+
+summary(hop_prices)
+```
+
+As a homebrewer, I am interested in the form of hops used by US breweries.  So
+here is a quick chart to show the two forms of hops in the data.
+
+As is, the chart isn't too informative, so I will log the vertical axis.
+
+```{r first chart}
+beermaterials %>% 
+  select(time, Dry = Hops_dry, Extract = Hops_extracts) %>% 
+  gather(Hops, Pounds, -time) %>% 
+  mutate(
+    Pounds = Pounds / 1e6
+  ) %>% 
+  ggplot(aes(x=time, y=Pounds, color=Hops)) +
+    geom_line() +
+    theme_minimal() + 
+    labs(x = "", y = "Pounds (millions)", 
+         title="Trends in the form of hops used by US breweries",
+         caption="Sources: ttbbeer::beermaterials") + 
+    theme(legend.position="bottom")
+
+```
+
+There is a sharp decline in the amount of dry hops used beginning in the middle
+of 2013. Part of this could be a change in data collection practicies (especially
+given the two large spikes that correspond to the end of 2014 and 2015), but 
+what about other explanations.
+
+## Possible explanations
+
+I know from reading that the price of hops has increased substantially in the last
+few years. So lets plot those data on a similar time scale. **Demo**
+
+```{r second chart}
+hop_prices %>% 
+  ggplot(aes(x=time, y=price)) + 
+    geom_line() +
+    theme_minimal() + 
+    labs(x = "", y = "Dollars/Pound", 
+         title="Trends in the price of hops in the US",
+         caption="Sources: https://ycharts.com/indicators/us_hops_price_received") 
+```
+
+## Live updating
+
+**DEMO**
+
+## New run options
